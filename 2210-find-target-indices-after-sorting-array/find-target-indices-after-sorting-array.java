@@ -1,15 +1,45 @@
 class Solution {
     public List<Integer> targetIndices(int[] nums, int target) {
+        int n= nums.length;
         List<Integer> ans= new ArrayList<>();
         Arrays.sort(nums);
-        for(int i=0;i<nums.length;i++){
-            if(nums[i]==target){
-                ans.add(i);
+        int low=0;
+        int high=n-1;
+        int first=-1;
+        int last=-1;
+        while(low<=high){
+            int mid=low+(high-low)/2;
+            if(nums[mid]==target){
+                first=mid;
+                high=mid-1;
             }
-            if(nums[i]>target){
-                return ans;
+            else if(nums[mid]<target){
+                low=mid+1;
             }
-                            
+            else{
+                high=mid-1;
+            }
+        }
+        low=0;
+        high=n-1;
+        while(low<=high){
+            int mid=low+(high-low)/2;
+            if(nums[mid]==target){
+                last=mid;
+                low=mid+1;
+            }
+            else if(nums[mid]<target){
+                low=mid+1;
+            }
+            else{
+                high=mid-1;
+            }
+        }
+        if(first==-1 && last==-1){
+            return ans;
+        }
+        for(int i=first;i<=last;i++){
+            ans.add(i);
         }
         return ans;
     }
