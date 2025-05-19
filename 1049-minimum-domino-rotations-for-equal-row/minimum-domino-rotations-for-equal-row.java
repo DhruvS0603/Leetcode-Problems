@@ -1,34 +1,17 @@
 class Solution {
     public int minDominoRotations(int[] tops, int[] bottoms) {
-        HashMap<Integer,Integer> map= new HashMap<>();
-        for(int i=0;i<tops.length;i++){
-            map.put(tops[i],map.getOrDefault(tops[i],0)+1);
-            map.put(bottoms[i],map.getOrDefault(bottoms[i],0)+1);
+        int rotations = check(tops[0], tops, bottoms);
+        if (rotations != -1 || tops[0] == bottoms[0]) return rotations;
+        return check(bottoms[0], tops, bottoms);
         }
-        int maxi=0;
-        int ele=0;
-        for(int m:map.keySet()){
-            if(map.get(m)>maxi){
-                maxi=map.get(m);
-                ele=m;
-            }
+    
+    private int check(int target, int[] tops, int[] bottoms) {
+        int topRotations = 0, bottomRotations = 0;
+        for (int i = 0; i < tops.length; i++) {
+            if (tops[i] != target && bottoms[i] != target) return -1;
+            else if (tops[i] != target) topRotations++;
+            else if (bottoms[i] != target) bottomRotations++;
         }
-        if(maxi<tops.length){
-            return -1;
-        }
-        int topRotate=0;
-        int bottomRotate=0;
-        for(int i=0;i<tops.length;i++){
-            if(tops[i]!=ele && bottoms[i]!=ele){
-                return -1;
-            }
-            if(tops[i]!=ele){
-                topRotate++;
-            }
-            if(bottoms[i]!=ele){
-                bottomRotate++;
-            }
-        }
-        return Math.min(topRotate,bottomRotate);
+        return Math.min(topRotations, bottomRotations);
     }
 }
