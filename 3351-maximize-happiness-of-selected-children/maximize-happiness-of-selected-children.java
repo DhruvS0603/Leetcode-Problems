@@ -4,7 +4,7 @@ class Solution {
         Arrays.sort(happiness);
         int n=happiness.length;
         long ans=0;
-        for(int i=n-1;i>=n-k;i--){
+        for(int i=n-1;i>n-1-k;i--){
             ans+=Math.max(0, happiness[i]-count);
             count++;
         }
